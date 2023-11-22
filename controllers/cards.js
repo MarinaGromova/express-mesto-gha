@@ -21,8 +21,9 @@ module.exports.addCard = (req, res) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE).send({ message: err.message });
+      } else {
+        res.status(SERVER_ERROR).send({ message: 'Server Error' });
       }
-      return res.status(SERVER_ERROR).send({ message: 'Server Error' });
     });
 };
 
