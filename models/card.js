@@ -4,15 +4,15 @@ const CardSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
-      minLength: 2,
-      maxLength: 30,
+      require: [true, 'Поле "Название" должно быть заполнено'],
+      minLength: [2, 'Минимальная длина поля - 2 символа'],
+      maxLength: [30, 'Максимальная длина поля - 30 символов'],
     },
     link: {
       type: String,
       require: true,
-      minLength: 2,
-      maxLength: 30,
+      minLength: [2, 'Минимальная длина поля - 2 символа'],
+      maxLength: [30, 'Максимальная длина поля - 30 символов'],
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
