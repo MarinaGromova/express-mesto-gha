@@ -38,7 +38,7 @@ module.exports.addUser = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE).send({ message: err.message });
       } else {
-        return res.status(SERVER_ERROR).send({ message: 'Server Error' });
+        res.status(SERVER_ERROR).send({ message: 'Server Error' });
       }
     });
 };
