@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
+      required: [true, 'Поле "Ссылка на аватар" должно быть заполнено'],
     },
   },
   { versionKey: false },
