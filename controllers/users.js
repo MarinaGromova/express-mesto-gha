@@ -1,15 +1,16 @@
 const User = require('../models/user');
 
-const STATUS_OK = 200;
-const STATUS_CREATED = 201;
-const ERROR_CODE = 400;
-const NOT_FOUND = 404;
-const SERVER_ERROR = 500;
+const {
+  STATUS_CREATED,
+  ERROR_CODE,
+  NOT_FOUND,
+  SERVER_ERROR,
+} = require('../utils/utils');
 
 module.exports.getUsers = (req, res) => {
   User.find({})
-    .then((users) => res.status(STATUS_OK).send(users))
-    .catch(() => res.status(SERVER_ERROR).send({ message: 'Server Error' }));
+    .then((users) => res.send(users))
+    .catch(() => res.send({ message: 'Server Error' }));
 };
 
 module.exports.getUserById = (req, res) => {
@@ -19,7 +20,7 @@ module.exports.getUserById = (req, res) => {
         res.status(NOT_FOUND).send({ message: 'User not found' });
         return;
       }
-      res.status(STATUS_OK).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -36,7 +37,9 @@ module.exports.addUser = (req, res) => {
     .then((user) => res.status(STATUS_CREATED).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE).send({ message: err.message });
+        res
+          .status(ERROR_CODE)
+          .send({ message: 'Переданы некорректные данные' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'Server Error' });
       }
@@ -55,11 +58,13 @@ module.exports.updateUsersInfo = (req, res) => {
         res.status(NOT_FOUND).send({ message: 'User not found' });
         return;
       }
-      res.status(STATUS_OK).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE).send({ message: err.message });
+        res
+          .status(ERROR_CODE)
+          .send({ message: 'Переданы некорректные данные' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'Server Error' });
       }
@@ -78,11 +83,13 @@ module.exports.updateUsersAvatar = (req, res) => {
         res.status(NOT_FOUND).send({ message: 'User not found' });
         return;
       }
-      res.status(STATUS_OK).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE).send({ message: err.message });
+        res
+          .status(ERROR_CODE)
+          .send({ message: 'Переданы некорректные данные' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'Server Error' });
       }
