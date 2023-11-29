@@ -1,14 +1,5 @@
-const STATUS_CREATED = 201;
-
-const ERROR_CODE = 400;
-
-const NOT_FOUND = 404;
-
-const SERVER_ERROR = 500;
+const regexUrl = /https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}/i;
 
 module.exports = {
-  STATUS_CREATED,
-  ERROR_CODE,
-  NOT_FOUND,
-  SERVER_ERROR,
+  regexUrl,
 };
