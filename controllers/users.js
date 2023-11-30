@@ -14,22 +14,23 @@ module.exports.login = (req, res, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new AuthorizationError('Такого пользователя не существует');
+        return next(new AuthorizationError('Такого пользователя не существует'));
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new AuthorizationError('Неправильные почта или пароль'));
+            return next(new AuthorizationError('Неправильные почта или пароль'));
           }
 
-          const token = jwt.sign({ _id: user._id }, 'some-secret-key');
+          const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
           return res.cookie('jwt', token, {
             httpOnly: true,
             sameSite: true,
             maxAge: 360000 * 24 * 7,
           });
         })
-        .then(() => res.send({ message: 'Успешный вход' }));
+        .then(() => res.send({ message: 'Успешный вход' }))
+        .catch(next);
     })
     .catch(next);
 };
@@ -81,14 +82,13 @@ module.exports.createUser = (req, res, next) => {
         email: user.email,
       }))
       .catch((err) => {
-        if (err.name === 'ValidationError') {
-          next(new BadRequestError('Переданы некорректные данные'));
-        } else if (err.code === 11000) {
+        if (err.code === 11000) {
           next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
         } else {
           next(err);
         }
-      });
+      })
+      .catch(next);
   });
 };
 
