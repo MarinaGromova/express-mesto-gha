@@ -24,11 +24,6 @@ module.exports.login = (req, res, next) => {
 
           const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
           return res.send({ jwt: token });
-          // return res.cookie('jwt', token, {
-          //   httpOnly: true,
-          //   sameSite: true,
-          //   maxAge: 360000 * 24 * 7,
-          // });
         })
         .then(() => res.send({ message: 'Успешный вход' }))
         .catch(next);
