@@ -12,6 +12,8 @@ const auth = require('./middlewares/auth');
 
 const { regexUrl } = require('./utils/utils');
 
+const handleError = require('./middlewares/handleError');
+
 const { PORT = 3000 } = process.env;
 
 const app = express();
@@ -45,11 +47,12 @@ app.post(
   createUser,
 );
 
-app.use(errors());
-
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));
 
 app.use('*', (req, res) => res.status(404).send({ message: 'NOT_FOUND' }));
+
+app.use(errors());
+app.use(handleError);
 
 app.listen(PORT);
