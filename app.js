@@ -4,6 +4,8 @@ const express = require('express');
 
 const { celebrate, Joi } = require('celebrate');
 
+const { errors } = require('celebrate');
+
 const { login, createUser } = require('./controllers/users');
 
 const auth = require('./middlewares/auth');
@@ -42,6 +44,8 @@ app.post(
   }),
   createUser,
 );
+
+app.use(errors());
 
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));

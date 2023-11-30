@@ -83,8 +83,7 @@ module.exports.createUser = (req, res, next) => {
       }))
       .catch((err) => {
         if (err.name === 'ValidationError') {
-          next(new BadRequestError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(err.errors).map(() => `${err.message.slice(5)}`).join(' ')}`));
-          // next(new BadRequestError('Переданы некорректные данные'));
+          next(new BadRequestError('Переданы некорректные данные'));
         } else if (err.code === 11000) {
           next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
         } else {
