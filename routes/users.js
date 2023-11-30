@@ -12,11 +12,11 @@ const { regexUrl } = require('../utils/utils');
 router.get('/', getUsers);
 router.get(
   '/me',
-  // celebrate({
-  //   params: Joi.object().keys({
-  //     userId: Joi.string().alphanum().length(24).hex(),
-  //   }),
-  // }),
+  celebrate({
+    params: Joi.object().keys({
+      userId: Joi.string().alphanum().length(24).hex(),
+    }),
+  }),
   getCurrentUser,
 );
 router.get(
