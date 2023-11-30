@@ -8,7 +8,7 @@ const { login, createUser } = require('./controllers/users');
 
 const auth = require('./middlewares/auth');
 
-const { regexUrl } = require('./utils/utils');
+// const { regexUrl } = require('./utils/utils');
 
 const { PORT = 3000 } = process.env;
 
@@ -31,15 +31,15 @@ app.post(
 );
 app.post(
   '/signup',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(20),
-      avatar: Joi.string().regex(regexUrl),
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
+  // celebrate({
+  //   body: Joi.object().keys({
+  //     name: Joi.string().min(2).max(30),
+  //     about: Joi.string().min(2).max(20),
+  //     avatar: Joi.string().regex(regexUrl),
+  //     email: Joi.string().required().email(),
+  //     password: Joi.string().required(),
+  //   }),
+  // }),
   createUser,
 );
 
