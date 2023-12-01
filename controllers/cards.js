@@ -32,7 +32,7 @@ module.exports.deleteCard = async (req, res, next) => {
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Пользователь не найден');
-      } if (card.owner !== req.user._id) {
+      } if (card.owner.toString() !== req.user._id) {
         throw new ForbiddenError('Нельзя удалить чужую карточку.');
       }
       Card.deleteOne()
